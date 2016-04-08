@@ -7,7 +7,8 @@ import org.junit.Test;
 //@RunWith(Parameterized.class)
 public class LogAnalyserTest {
 
-	private LogAnalyser logAnalyser;
+	//private LogAnalyser logAnalyser;
+	private LogAnalyser testableLogAnalyser;
 	private IFileExtentionManager fem;
 	
 //	@Parameterized.Parameters 
@@ -29,8 +30,9 @@ public class LogAnalyserTest {
 	public void setUp() throws Exception {
 		fem= new FakeFileExtentionManager();
 		fem.setWillReturn(true);
-		logAnalyser = new LogAnalyser();
-		FileExtentionManagerFactory.getInstance().setFileExtMgr(fem);
+		//logAnalyser = new LogAnalyser();
+		testableLogAnalyser = new TestableLogAnalyser(fem);
+		//FileExtentionManagerFactory.getInstance().setFileExtMgr(fem);
 			
 	}
 	
@@ -48,17 +50,17 @@ public class LogAnalyserTest {
 //	}
 	
 	@Test
-	public void isValidLogFileName_Valid_ReturnsTrue() throws Exception{
+	public void isValidLogFileNameTestable_Valid_ReturnsTrue() throws Exception{
 		
 		fem.setWillReturn(true);
-		assertEquals("should be valid", logAnalyser.isValidLogFileName(""), true);
+		assertEquals("should be valid", testableLogAnalyser.isValidLogFileName(""), true);
 	}
 	
 	@Test
-	public void isValidLogFileName_NotValid_ReturnsFalse() throws Exception{
+	public void isValidLogFileNameTestable_NotValid_ReturnsFalse() throws Exception{
 		
 		fem.setWillReturn(false);
-		assertEquals("should be invalid", logAnalyser.isValidLogFileName(""), false);
+		assertEquals("should be invalid", testableLogAnalyser.isValidLogFileName(""), false);
 	}
 	
 //	@Test
