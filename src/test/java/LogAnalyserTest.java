@@ -1,20 +1,14 @@
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 //@RunWith(Parameterized.class)
 public class LogAnalyserTest {
 
 	private LogAnalyser logAnalyser;
+	private IFileExtentionManager fem;
 	
 //	@Parameterized.Parameters 
 //	public static Collection<Object[]> data() {
@@ -33,7 +27,11 @@ public class LogAnalyserTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
+		fem= new FakeFileExtentionManager();
+		fem.setWillReturn(true);
+		logAnalyser = new LogAnalyser();
+		FileExtentionManagerFactory.getInstance().setFileExtMgr(fem);
+			
 	}
 	
 	@After
@@ -50,13 +48,17 @@ public class LogAnalyserTest {
 //	}
 	
 	@Test
-	public void isValidLogFileNameReturnsTrue() throws Exception{
-		IFileExtentionManager fem= new FakeFileExtentionManager();
+	public void isValidLogFileName_Valid_ReturnsTrue() throws Exception{
+		
 		fem.setWillReturn(true);
-		//logAnalyser = new LogAnalyser(fem);
-		logAnalyser = new LogAnalyser();
-		logAnalyser.setFem(fem);
-		assertTrue("this should be true" , logAnalyser.isValidLogFileName("fds"));
+		assertEquals("should be valid", logAnalyser.isValidLogFileName(""), true);
+	}
+	
+	@Test
+	public void isValidLogFileName_NotValid_ReturnsFalse() throws Exception{
+		
+		fem.setWillReturn(false);
+		assertEquals("should be invalid", logAnalyser.isValidLogFileName(""), false);
 	}
 	
 //	@Test

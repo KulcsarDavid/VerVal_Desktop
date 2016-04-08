@@ -1,19 +1,12 @@
+import javax.annotation.processing.FilerException;
+
 
 
 
 public class LogAnalyser {
 
-	 public static final String SUFFIX = ".str";
 	 private static IFileExtentionManager fem;
-	 
-	 public LogAnalyser() {		//IFileExtentionManager fem2) {
-		 //fem=fem2;
-	 }
 
-	 public void setFem(IFileExtentionManager fem2) {
-		 fem=fem2;
-	 }
-	 
     public static boolean isValidLogFileName(String name){
 //	        if(name != null){
 //	        	if(name.length()< SUFFIX.length()) {
@@ -22,8 +15,10 @@ public class LogAnalyser {
 //	            return name.endsWith(SUFFIX);
 //	        }
 //	        return false;
-    	return fem.isValid(name);
+    	//return fem.isValid(name);
+    	return FileExtentionManagerFactory.getInstance().getFileExtMgr().isValid(name);
     }	
+    
 	    
 	    
 }
